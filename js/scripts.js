@@ -55,8 +55,8 @@ function generateCard(data) {
         divCardInfo.appendChild(pCity);
 
         // AppendChild to "Gallery"
+        divCard.appendChild(divCardImg);
         divCard.appendChild(divCardInfo);
-        divGallery.appendChild(divCardImg);
         divGallery.appendChild(divCard);
     }
 }
