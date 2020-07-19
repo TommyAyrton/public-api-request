@@ -131,7 +131,5 @@ divGallery.addEventListener('click', (e) => {
 
 // When the user clicks anywhere outside of the modal, close it
 // window.addEventListener('click', (e) => {
-//     if (e.target == modal) {
-//         modal.style.display = 'none';
-//     }
+//
 // });
