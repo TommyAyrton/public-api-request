@@ -1,4 +1,6 @@
+const body = document.querySelector('body');
 const divGallery = document.getElementById('gallery');
+let arrUsers = [];
 
 function checkStatus(response) {
     if (response.ok) {
@@ -18,45 +20,118 @@ function fetchData(url) {
 }
 
 fetchData('https://randomuser.me/api/?results=12').then((data) => {
-    generateCard(data.results);
+    arrUsers = [...data.results];
+    generateCard(arrUsers);
 });
 
-function generateCard(data) {
-    // Loop over the array `data` returned
-    for (let i = 0, len = data.length; i < len; i++) {
-        const divCard = document.createElement('div');
-        divCard.className = 'card';
-
-        // Create div with users images
-        const divCardImg = document.createElement('div');
-        divCardImg.className = 'card-img-container';
-        const img = document.createElement('img');
-        img.setAttribute('class', 'card-img');
-        img.setAttribute('src', `${data[i].picture.thumbnail}`);
-        img.setAttribute('alt', `profile picture ${data[i].name.first}`);
-        divCardImg.appendChild(img);
-        divCard.appendChild(divCardImg);
-
-        // Create div with users info
-        const divCardInfo = document.createElement('div');
-        divCardInfo.className = 'card-info-container';
-        const h3 = document.createElement('h3');
-        h3.setAttribute('id', 'name');
-        h3.setAttribute('class', 'card-name cap');
-        h3.innerText = `${data[i].name.first} ${data[i].name.last}`;
-        const pEmail = document.createElement('p');
-        pEmail.className = 'card-text';
-        pEmail.innerText = `${data[i].email}`;
-        const pCity = document.createElement('p');
-        pCity.className = 'card-text cap';
-        pCity.innerText = `${data[i].location.city}, ${data[i].location.state}`;
-        divCardInfo.appendChild(h3);
-        divCardInfo.appendChild(pEmail);
-        divCardInfo.appendChild(pCity);
-
-        // AppendChild to "Gallery"
-        divCard.appendChild(divCardImg);
-        divCard.appendChild(divCardInfo);
-        divGallery.appendChild(divCard);
-    }
+function generateCard(users) {
+    const createCards = (user, index) => {
+        const cardHTML = document.createElement('div');
+        cardHTML.classList.add('card');
+        cardHTML.setAttribute('data-position', index);
+        cardHTML.innerHTML = `            
+            <div class="card-img-container">
+                <img class="card-img" src="${user.picture.thumbnail}" alt="profile ${user.name.first}">
+            </div>
+            <div class="card-info-container">
+                <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+                <p class="card-text">${user.email}</p>
+                <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
+            </div>            
+        `;
+        divGallery.appendChild(cardHTML);
+    };
+    users.map(createCards);
 }
+
+function generateModal(index) {
+    const birthday = new Date(arrUsers[index].dob.date);
+    const divModal = document.createElement('div');
+    divModal.classList.add('modal-container');
+    divModal.innerHTML = `
+    <div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+            <img class="modal-img" src="${
+                arrUsers[index].picture.thumbnail
+            }" alt="profile ${arrUsers[index].name.first}">
+            <h3 id="name" class="modal-name cap">${
+                arrUsers[index].name.first
+            } ${arrUsers[index].name.last}</h3>
+            <p class="modal-text">${arrUsers[index].email}</p>
+            <p class="modal-text cap">${arrUsers[index].location.city}</p>
+            <hr>
+            <p class="modal-text">${arrUsers[index].phone}</p>
+            <p class="modal-text">${arrUsers[index].location.street.number} ${
+        arrUsers[index].location.street.name
+    }, ${arrUsers[index].location.city}, ${arrUsers[index].location.country} ${
+        arrUsers[index].location.postcode
+    }</p>
+            <p class="modal-text">Birthday: ${birthday.toLocaleDateString()}</p>
+        </div>
+    </div> 
+    
+    <div class="modal-btn-container">
+        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+        <button type="button" id="modal-next" class="modal-next btn">Next</button>
+    </div>
+    `;
+    body.appendChild(divModal);
+    btnCloseModal('modal-container', 'modal-close-btn');
+    btnNextUser('modal-container', 'modal-next', index);
+    btnPrevUser('modal-container', 'modal-prev', index);
+}
+
+function btnCloseModal(modal, btn) {
+    const divModal = document.querySelector(`div.${modal}`);
+    const btnClose = document.getElementById(btn);
+    btnClose.addEventListener('click', () => {
+        divModal.remove();
+    });
+}
+
+function btnNextUser(modal, id, index) {
+    const divModal = document.querySelector(`div.${modal}`);
+    const btnPrev = document.getElementById(id);
+    const len = arrUsers.length;
+    btnPrev.addEventListener('click', () => {
+        divModal.remove();
+        index++;
+        if (index === len) {
+            generateModal(0);
+        } else if (index < len) {
+            generateModal(index);
+        }
+    });
+}
+
+function btnPrevUser(modal, id, index) {
+    const divModal = document.querySelector(`div.${modal}`);
+    const btnNext = document.getElementById(id);
+    const len = arrUsers.length;
+    btnNext.addEventListener('click', () => {
+        divModal.remove();
+        index--;
+        if (index < 0) {
+            index = len - 1;
+            generateModal(index);
+        } else if (index < len) {
+            generateModal(index);
+        }
+    });
+}
+
+divGallery.addEventListener('click', (e) => {
+    const element = e.target.parentElement.parentElement;
+    if (element.getAttribute('class') === 'card') {
+        const index = element.getAttribute('data-position');
+        generateModal(index);
+    }
+});
+
+// When the user clicks anywhere outside of the modal, close it
+// window.addEventListener('click', (e) => {
+//     if (e.target == modal) {
+//         modal.style.display = 'none';
+//     }
+// });
