@@ -128,8 +128,3 @@ divGallery.addEventListener('click', (e) => {
         generateModal(index);
     }
 });
-
-// When the user clicks anywhere outside of the modal, close it
-// window.addEventListener('click', (e) => {
-//
-// });

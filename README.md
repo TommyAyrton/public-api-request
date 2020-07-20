@@ -1,6 +1,6 @@
 # public-api-request
 
-In this project we work with api, DOM, events.
+In this project we work with api, DOM and events.
 
 ## Installation
 
@@ -10,25 +10,22 @@ In this project we work with api, DOM, events.
 
 ### Description
 
-We make a request to "randomuser.me" web page.
+We make a request to "https://randomuser.me/", to grab information for random employees with the Random User Generator API.
 
--   First click in the button Start Game
+-   When the page loads, you can see the list of employees.
 
-    ![](/images/startGame.png)
+    ![](/mockups/employee_directory.png)
 
--   You have 5 tries to guess the phrase, by selecting the letters
+-   Clicking the employee’s image or name will open a modal window with more detailed information.
 
-    ![](/images/guessPhrase.png)
+    ![](/mockups/employee_overlay.png)
 
 ### Ohter description
 
-To change the phrases, with those of your preference, you have to:
-
--   Open the Game.js file.
--   Change the phrases between the single quotes.
+In this case we use Fetch Api:
 
 ```
-    Bloque de codigo
+    The Fetch API provides an interface for fetching resources (including across the network). It will seem familiar to anyone who has used XMLHttpRequest, but the new API provides a more powerful and flexible feature set.
 ```
 
 ## Built with
@@ -36,7 +33,14 @@ To change the phrases, with those of your preference, you have to:
 -   Javascript
 -   HTML
 -   CSS
+-   Fetch Api
 
 ## Acknowledgments
 
 -   Thank the Treehouse team for the encouragement through each review.
+-   I would like to thank @Scott Adams, I have read one of your messages in slack that helped me get started.
+
+## Resources
+
+-   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+-
