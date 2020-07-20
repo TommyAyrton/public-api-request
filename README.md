@@ -6,7 +6,7 @@ In this project we work with api, DOM and events.
 
 -   Open the Index.html file with your preferred browser.
 
-## **Public Api Request**
+## **Public Api Requests**
 
 ### Description
 
@@ -42,5 +42,4 @@ In this case we use Fetch Api:
 
 ## Resources
 
--   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
--
+-   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API".
