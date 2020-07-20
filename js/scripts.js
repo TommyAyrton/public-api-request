@@ -1,5 +1,6 @@
 const body = document.querySelector('body');
 const divGallery = document.getElementById('gallery');
+const divSearch = document.querySelector('div.search-container');
 let arrUsers = [];
 
 function checkStatus(response) {
@@ -22,6 +23,7 @@ function fetchData(url) {
 fetchData('https://randomuser.me/api/?results=12').then((data) => {
     arrUsers = [...data.results];
     generateCard(arrUsers);
+    createSearchBox();
 });
 
 function generateCard(users) {
@@ -117,6 +119,53 @@ function btnPrevUser(modal, id, index) {
             generateModal(index);
         } else if (index < len) {
             generateModal(index);
+        }
+    });
+}
+
+const isValidUserName = (username) => /^[a-zA-Z]+$/.test(username);
+
+const checkName = (name) => {
+    // array donde se guarda todos los usuarios que conciendan con el parametro "name"
+    // let users = [];
+    for (let i = 0, len = arrUsers.length; i < len; i++) {
+        const userName = arrUsers[i].name.first.toLowerCase();
+        if (userName === name.toLowerCase()) {
+            // users.push(i);
+            return i;
+            break;
+        }
+    }
+    // return users;
+    return -1;
+};
+
+function createSearchBox() {
+    divSearch.innerHTML = `
+        <form action="#" method="get">
+            <input type="search" id="search-input" class="search-input" placeholder="Search...">
+            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+        </form>
+    `;
+    const form = document.querySelector('form');
+    const inputName = document.querySelector('input#search-input');
+    form.addEventListener('submit', (e) => {
+        const name = inputName.value;
+        e.preventDefault();
+        if (!isValidUserName(inputName.value)) {
+            alert('Please provide a valid name');
+            inputName.focus();
+            return;
+        }
+        // console.log(checkName(name));
+        // const arr = checkName(name);
+        // const users = (user, index) => {};
+        if (checkName(name) >= 0) {
+            generateModal(checkName(name));
+        } else {
+            alert('No name found');
+            inputName.focus();
+            return;
         }
     });
 }
