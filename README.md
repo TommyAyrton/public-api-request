@@ -39,11 +39,11 @@ In this case we use Fetch Api:
 -   CSS
 -   Fetch Api
 
+## Resources
+
+-   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API".
+
 ## Acknowledgments
 
 -   Thank the Treehouse team for the encouragement through each review.
 -   I would like to thank @Scott Adams, I have read one of your messages in slack that helped me get started.
-
-## Resources
-
--   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API".
