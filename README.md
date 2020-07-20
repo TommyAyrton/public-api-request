@@ -20,6 +20,10 @@ We make a request to "https://randomuser.me/", to grab information for random em
 
     ![](/mockups/employee_overlay.png)
 
+-   You can search any employee by name, in the search box.
+
+    ![](/mockups/search.png)
+
 ### Ohter description
 
 In this case we use Fetch Api:
