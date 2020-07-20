@@ -28,9 +28,7 @@ We make a request to "https://randomuser.me/", to grab information for random em
 
 In this case we use Fetch Api:
 
-```
-    The Fetch API provides an interface for fetching resources (including across the network). It will seem familiar to anyone who has used XMLHttpRequest, but the new API provides a more powerful and flexible feature set.
-```
+    **The Fetch API provides an interface for fetching resources (including across the network). It will seem familiar to anyone who has used XMLHttpRequest, but the new API provides a more powerful and flexible feature set.**
 
 ## Built with
 
