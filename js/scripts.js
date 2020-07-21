@@ -1,7 +1,9 @@
+/** @global */
 const body = document.querySelector('body');
 const divGallery = document.getElementById('gallery');
 const divSearch = document.querySelector('div.search-container');
 let arrUsers = [];
+let len = 0;
 
 function checkStatus(response) {
     if (response.ok) {
@@ -26,7 +28,13 @@ fetchData('https://randomuser.me/api/?results=12').then((data) => {
     createSearchBox();
 });
 
+/**
+ * @function `generateCard` function that generate a card info for each employee.
+ * @param {array} users - Array employees
+ */
 function generateCard(users) {
+    len = users.length;
+    divGallery.innerHTML = '';
     const createCards = (user, index) => {
         const cardHTML = document.createElement('div');
         cardHTML.classList.add('card');
@@ -46,6 +54,10 @@ function generateCard(users) {
     users.map(createCards);
 }
 
+/**
+ * @function `generateModal` function that generate a window modal for selected employee.
+ * @param {number} index - Indicates the position of the selected employee.
+ */
 function generateModal(index) {
     const birthday = new Date(arrUsers[index].dob.date);
     const divModal = document.createElement('div');
@@ -84,18 +96,39 @@ function generateModal(index) {
     btnPrevUser('modal-container', 'modal-prev', index);
 }
 
+/**
+ * @function `btnCloseModal` function that generate close button for window modal.
+ * @param {string} modal - Indicates the class name of the div 'modal'.
+ * @param {string} btn - Indicates the id name of the close button.
+ */
 function btnCloseModal(modal, btn) {
     const divModal = document.querySelector(`div.${modal}`);
     const btnClose = document.getElementById(btn);
+    /**
+     * @event click#Button
+     * @property - Delete the employee information card.
+     */
     btnClose.addEventListener('click', () => {
         divModal.remove();
     });
 }
 
+/**
+ * @function `btnNextUser` function that generate button for view the next employee.
+ * @param {string} modal - Indicates the class name of the div 'modal'.
+ * @param {string} id - Indicates the id name of the next button.
+ * @param {number} index - Indicates the position of the selected employee.
+ */
 function btnNextUser(modal, id, index) {
     const divModal = document.querySelector(`div.${modal}`);
     const btnPrev = document.getElementById(id);
-    const len = arrUsers.length;
+    if (len === 1) {
+        btnPrev.style.display = 'none';
+    }
+    /**
+     * @event click#Button
+     * @property {boolean} - Shows the next employee to the current one.
+     */
     btnPrev.addEventListener('click', () => {
         divModal.remove();
         index++;
@@ -107,10 +140,22 @@ function btnNextUser(modal, id, index) {
     });
 }
 
+/**
+ * @function `btnNextUser` function that generate button for view the preview employee.
+ * @param {string} modal - Indicates the class name of the div 'modal'.
+ * @param {string} id - Indicates the id name of the prev button.
+ * @param {number} index - Indicates the position of the selected employee.
+ */
 function btnPrevUser(modal, id, index) {
     const divModal = document.querySelector(`div.${modal}`);
     const btnNext = document.getElementById(id);
-    const len = arrUsers.length;
+    if (len === 1) {
+        btnNext.style.display = 'none';
+    }
+    /**
+     * @event click#Button
+     * @property {boolean} - Shows the previous employee to the current one.
+     */
     btnNext.addEventListener('click', () => {
         divModal.remove();
         index--;
@@ -123,23 +168,35 @@ function btnPrevUser(modal, id, index) {
     });
 }
 
+/**
+ * @function `isValidUserName` function that validate input name.
+ * @param {string} username - Passed for search a employee.
+ */
 const isValidUserName = (username) => /^[a-zA-Z]+$/.test(username);
 
+/**
+ * @function `checkName` function that checks if the name you are looking for exists.
+ * @param {string} name - Letters that match the employee's 'name'.
+ * @return {array} - Array of employees that match with 'name'.
+ */
 const checkName = (name) => {
-    // array donde se guarda todos los usuarios que conciendan con el parametro "name"
-    // let users = [];
+    const myRe = new RegExp(`^${name}`, 'i');
+    // array where all users matching with the "name" parameter are saved
+    let users = [];
     for (let i = 0, len = arrUsers.length; i < len; i++) {
         const userName = arrUsers[i].name.first.toLowerCase();
-        if (userName === name.toLowerCase()) {
-            // users.push(i);
-            return i;
-            break;
+        if (myRe.test(userName)) {
+            users.push(arrUsers[i]);
         }
     }
-    // return users;
-    return -1;
+    return users;
 };
 
+/**
+ * @function `createSearchBox` function that generate the search box.
+ * @param {string} modal - Number indicating the position of the selected employee.
+ * @param {string} btn - Number indicating the position of the selected employee.
+ */
 function createSearchBox() {
     divSearch.innerHTML = `
         <form action="#" method="get">
@@ -149,27 +206,31 @@ function createSearchBox() {
     `;
     const form = document.querySelector('form');
     const inputName = document.querySelector('input#search-input');
+    /**
+     * @event submit#Form
+     * @property {boolean} - Displays the found employee or displays an alert if the employee
+     * was not found.
+     */
     form.addEventListener('submit', (e) => {
         const name = inputName.value;
         e.preventDefault();
         if (!isValidUserName(inputName.value)) {
-            alert('Please provide a valid name');
+            alert('Please provide only letters');
             inputName.focus();
             return;
         }
-        // console.log(checkName(name));
-        // const arr = checkName(name);
-        // const users = (user, index) => {};
-        if (checkName(name) >= 0) {
-            generateModal(checkName(name));
-        } else {
-            alert('No name found');
-            inputName.focus();
-            return;
-        }
+        const users = [...checkName(name)];
+        const long = users.length;
+        arrUsers = users;
+        long > 0 ? generateCard(arrUsers) : alert('No name found');
     });
 }
 
+/**
+ * @event click#Div
+ * @property {boolean} - Indicates the 'parentElement.parentElement' of the selected
+ * element inside the 'card' box.
+ */
 divGallery.addEventListener('click', (e) => {
     const element = e.target.parentElement.parentElement;
     if (element.getAttribute('class') === 'card') {
