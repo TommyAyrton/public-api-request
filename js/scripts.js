@@ -22,7 +22,7 @@ function fetchData(url) {
         );
 }
 
-fetchData('https://randomuser.me/api/?results=12').then((data) => {
+fetchData('https://randomuser.me/api/?results=12&nat=us').then((data) => {
     arrUsers = [...data.results];
     generateCard(arrUsers);
     createSearchBox();
