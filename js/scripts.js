@@ -175,27 +175,6 @@ function btnPrevUser(modal, id, index) {
  */
 const isValidUserName = (username) => /^[a-zA-Z]+$/.test(username);
 
-// The telephone number must be in the format of (555) 555-5555
-// const isValidTelephone = (telephone) => {
-//     return /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/.test(
-//         telephone
-//     );
-// };
-
-/**
- * @function `formatTelephone` function that format input phone number.
- * @param {string} text - Passed the text to be formated.
- */
-// function formatTelephone(text) {
-//     // const expression = /^\D*(\d{3})\D*(\d{3})\D*(\d{4})\D*$/;
-//     const expression = /\(\d{3}\) \d{3}-\d{4}/;
-//     if (isValidTelephone(text)) {
-//         console.log(text);
-//     }
-//     return text;
-//     // return text.replace(expression, '($1) $2-$3');
-// }
-
 /**
  * @function `checkName` function that checks if the name you are looking for exists.
  * @param {string} name - Letters that match the employee's 'name'.
