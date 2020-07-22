@@ -22,7 +22,7 @@ We make a request to "https://randomuser.me/", to grab information for random em
 
 -   You can search any employee by letter or name, in the search box.
 
-    ![](/mockups/search.png)
+    ![](/mockups/employee_search.png)
 
 ### Ohter description
 
