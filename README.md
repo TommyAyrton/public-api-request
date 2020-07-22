@@ -20,7 +20,7 @@ We make a request to "https://randomuser.me/", to grab information for random em
 
     ![](/mockups/employee_overlay.png)
 
--   You can search any employee by name, in the search box.
+-   You can search any employee by letter or name, in the search box.
 
     ![](/mockups/search.png)
 
@@ -47,5 +47,4 @@ In this case we use Fetch Api:
 
 ## Acknowledgments
 
--   Thank the Treehouse team for the encouragement through each review.
--   I would like to thank @Scott Adams, I have read one of your messages in slack that helped me get started.
+-   I would like to thank @Lee Vaughn for the guide and @Scott Adams(I have read one of your messages in slack that helped me get started).
