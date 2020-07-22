@@ -37,6 +37,10 @@ In this case we use Fetch Api:
 -   CSS
 -   Fetch Api
 
+## Styles CSS
+
+-   Change the font family to Roboto, background color, and shadow on the card image
+
 ## Resources
 
 -   Fetch Api definition taken from "https://developer.mozilla.org/es/docs/Web/API/Fetch_API".
